@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Primera Entrega - Sistema de control de Peso</title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link rel="stylesheet" href="style/style.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    
+    <body class="bg-dark">
+      
+      <div class="container-fluid" id="modalImpresion" style="display: none;">
+        <div class="row">
+            <div class="col full-screen d-flex justify-content-center align-items-center">
+                <div class="tk-impreso d-flex flex-column align-items-center">
+                    <h6 id="tkImpreso" class="font-monospace"></h6>
+                    <div class="d-flex flex-column align-items-center my-2">
+                        <button class="btn btn-danger" id="btnTkImpreso">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+      
+      <div class="container-fluid" id="modalDebo" style="display: none;">
+        <div class="row">
+            <div class="col full-screen d-flex justify-content-center align-items-center">
+                <div class="cdo-debo d-flex flex-column align-items-center">
+                    <h1 class="display-1 text-info"><i class="bi bi-info-circle-fill"></i></h1>
+                    <h6 class="text-center">Parece que quieres poner el ticket de peso en cuenta corriente, ¿podrías poner el numero de cuenta DEBO del cliente?</h6>
+                
+                    <div class="d-flex flex-column align-items-center my-2">
+                        <div class="mb-3">
+                            <input type="text" class="form-control text-end" id="numeroDebo" aria-describedby="emailHelp">
+                        </div>
+                        <div class="d-flex flex-row">
+                          <button class="btn btn-info me-2" id="btnCdoDebo">Usar Codigo</button>
+                          <button class="btn btn-danger" id="btnCancelarCdoDebo">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+        <div class="bg-dark px-4 pt-1 my-3 text-center">
+          <h1 class="display-4 text-white" id="toggle">Control de Peso</h1> 
+          <!-- Seccion de PIN -->
+          <div class="col-lg-6 mx-auto" id="tomaPin" style="display: none;">
+            <div class="d-flex flex-column align-items-center">
+              <i class="icono-grande bi bi-lock-fill text-warning"></i>
+            </div>
+            <p class="lead text-muted pt-3">Para poder ver el peso es necesario que ingreses tu PIN de identificacion</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <form id="pinForm">
+                <div class="row justify-content-center py-5">
+                  <div class="col-auto">
+                    <input type="number" class="form-control pin-input bg-dark text-info text-bold sin-controles" id="pin1" min="0" max="9" length="1" maxlength="1" required>
+                  </div>
+                  <div class="col-auto">
+                    <input type="number" class="form-control pin-input bg-dark text-info text-bold sin-controles" id="pin2" min="0" max="9" maxlength="1" inputmode="numeric" required>
+                  </div>
+                  <div class="col-auto">
+                    <input type="number" class="form-control pin-input bg-dark text-info text-bold sin-controles" id="pin3" min="0" max="9" maxlength="1" inputmode="numeric" required>
+                  </div>
+                  <div class="col-auto">
+                    <input type="number" class="form-control pin-input bg-dark text-info text-bold sin-controles" id="pin4" min="0" max="9" maxlength="1" inputmode="numeric" required>
+                  </div>
+                </div>
+              </form>
+            </div>  
+          </div>
+          <!-- Fin Seccion de PIN -->
+
+          <div id="contOp" style="display: none;">
+            <div class="d-flex flex-column align-items-center">
+              <img src="images/1.png" alt="img Prefil" class="foto my-3" id="imgPerfil">
+              <h5 class="text-info" id="operador"></h5>
+            </div>
+          </div>
+
+          <!-- Seccion de toma de peso -->
+          
+          <div class="col-lg-6 mx-auto" id="tomaPeso" style="display: none;">
+            
+            <p class="texto-general mb-4 text-muted">Se esta leyendo el peso desde la celda de la balanza, si quisieras hacer un ingreso manual puedes hacer click en este icono <i class="bi bi-pencil-square text-muted"></i> para parar la lectura e ingresar el peso manual.</p>
+              
+            <div class="col-lg-12 mx-auto py-2 px-3 bg-info d-flex flex-row">
+              <div class="col-lg-4 mx-auto d-flex flex-column justify-content-start align-items-start">
+                  <h6 id="modoPeso" class="text-dark">AUTO</h6>
+              </div>
+              <div class="col-lg-4 mx-auto d-flex flex-column justify-content-center align-items-center">
+                  <h6 id="horaReloj" class="text-dark">10:35:42</h6>
+              </div>
+              <div class="col-lg-4 mx-auto d-flex flex-row justify-content-end align-items-center">
+                  <h3 style="display: '';" id="pesoManual"><i class="bi bi-pencil-square text-dark"></i></h3>  
+                  <div class="mb-1 px-2" id="divPesoManual" style="display: none;">
+                      <input type="text" class="form-control display-1 text-end text-bold text-dark bg-info" maxlength="5" id="campoPesoManual">
+                  </div>
+                  <h3 id="pesoAutomatico" style="display:none;"><i class="bi bi-caret-right-square text-dark"></i></h3>   
+              </div>
+          </div>
+          <div class="col-lg-12 mb-5 mx-auto py-1 bg-info d-flex flex-row">
+              <div class="col-lg-10 col-9 mb-1 mx-auto py-1 bg-info">
+                  <h1 id="pesoTomado" class="display-1 fw-bold text-end font-monospace px-5">45.234</h1>
+              </div>
+              <div class="col-lg-2 col-3 mb-1 mx-auto py-3 bg-info pl-5 d-flex flex-column justify-content-space-evenly">
+                  <h4 id="modoKg" class="text-center px-5">Kg.</h4>
+                  <h4 id="modoTn" class="text-center px-5 text-muted">Tn.</h4>
+              </div>
+          </div>
+            
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+              <button type="button" class="btn btn-info btn-lg px-4 me-sm-3 fw-bold" id="btnBruto">Bruto</button>
+              <button type="button" class="btn btn-success btn-lg px-4 me-sm-3 fw-bold" id="btnTara">Tara</button>
+              <button type="button" id="btnPendiente" class="btn btn-warning btn-lg px-4 me-sm-3 fw-bold">Listar Pesos</button>
+              <button type="button" class="btn btn-danger btn-lg px-4 fw-bold" id="btnCancelar">Cancelar</button>
+            </div>
+          </div>
+          <!-- Fin Seccion de toma de peso -->
+          
+          <!-- Seccion de toma de operacion -->
+          <div class="col-lg-6 mx-auto" id="tomaOperacion" style="display:none;">
+            <p class="texto-general mb-4 text-muted">Genial! ya tomaste el peso con el detalle de abajo, ahora solo tienes que elegir que vas a hecer con él!</p>
+            <div class="col-lg-12 mb-1 mx-auto py-1 bg-info">
+              <h6 calss="text-muted py-1" id="pesoValor">Peso Tomado : <strong>10.234 Kg.</strong></h6>
+              <h6 calss="text-muted py-1" id="pesoTipo">Tipo : <strong>Tara</strong></h6>
+              <h6 calss="text-muted py-1" id="pesoModo">Modo : <strong>MAN.</strong></h6>
+              <h6 calss="text-muted py-1" id="pesoFecha">Fecha y Hora: <strong>12/08/2022 08:34:56</strong></h6> 
+              <h6 calss="text-muted py-5" id="pesoOperador">Operador : <strong>Sergio Gramaglia</strong></h6>
+            </div>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-3">
+              <button type="button" id="btnNuevoTicket" class="btn btn-info btn-lg px-4 me-sm-3 fw-bold">Nuevo Tk</button>
+              <button type="button" id="btnVolverAPesar" class="btn btn-warning btn-lg px-4 me-sm-3 fw-bold">Volver a Peso</button>
+              <button type="button" id="btnCancelarTP" class="btn btn-danger btn-lg px-4 fw-bold">Cancelar</button>
+            </div>
+          
+          </div>
+          <!-- Fin Seccion de toma de operacion -->
+
+          <!-- Seccion de toma de nuevoTK -->
+          <div class="col-lg-6 mx-auto" id="tomaNuevoTicket" style="display:none;">
+            <p class="texto-general mb-4 text-muted">Buenisimo, Comencemos un nuevo Ticket</p>
+            <div class="col-lg-12 mb-1 mx-auto py-3 bg-info">
+              <h6 calss="text-muted py-1" id="ticketNumero">Ticket Nro : <strong>00000001</strong></h6>
+              <h6 calss="text-muted py-1" id="ticketFecha">Fecha y Hora: <strong>12/08/2022 08:34:56</strong></h6> 
+              <h6 calss="text-muted py-5" id="ticketOperador">Operador : <strong>Sergio Gramaglia</strong></h6>
+            </div>
+            <div class="col-lg-12 mb-5 mx-auto py-1 bg-light">
+              <form class="row g-3 mx-5 my-3 text-start">
+                <div class="col-md-6">
+                  <label for="ticketOrigen" class="form-label">Origen</label>
+                  <input type="text" class="form-control" id="ticketOrigen">
+                </div>
+                <div class="col-md-6">
+                  <label for="ticketDestino" class="form-label">Destino</label>
+                  <input type="text" class="form-control" id="ticketDestino">
+                </div>
+                <div class="col-md-12">
+                  <label for="ticketProducto" class="form-label">Producto</label>
+                  <select id="ticketProducto" class="form-select">
+                    <option value="NADA">Selecciona...</option>
+                    <option value="SOJA">SOJA</option>
+                    <option value="MAIZ">MAIZ</option>
+                    <option value="TRIGO">TRIGO</option>
+                    <option value="UREA">UREA</option>
+                    <option value="ROLLLOS">ROLLOS</option>
+                    <option value="PELLET">PELLET</option>
+                    <option value="ARENA">ARENA</option>
+                    <option value="RIPIO">RIPIO</option>
+                    <option value="PIEDRA">PIEDRA</option>
+                    <option value="HACIENDA">HACIENDA</option>
+                    <option value="CERDOS">CERDOS</option>
+                    <option value="OTROS">OTROS</option>
+                  </select>
+                </div>
+                <div class="linea-horizontal"></div>
+                <div class="col-md-4">
+                  <label for="ticketBruto" class="form-label" >Bruto</label>
+                  <input type="text" class="form-control text-end" id="ticketBruto" maxlength="5" pattern="[0-9]*">
+                </div>
+                <div class="col-md-4">
+                  <label for="ticketTara" class="form-label">Trara</label>
+                  <input type="text" class="form-control text-end" id="ticketTara"  maxlength="5" pattern="[0-9]*">
+                </div>
+                <div class="col-md-4">
+                  <label for="ticketNeto" class="form-label">Neto</label>
+                  <input type="text" class="form-control text-end" id="ticketNeto" maxlength="5" pattern="[0-9]*">
+                </div>
+                <div class="linea-horizontal"></div>
+                <div class="col-md-4">
+                  <label for="ticketChasis" class="form-label">Dominio Chasis</label>
+                  <input type="text" class="form-control" id="ticketChasis" maxlength="7">
+                </div>
+                <div class="col-md-4">
+                  <label for="ticektAcoplado" class="form-label">Dominio Acoplado</label>
+                  <input type="text" class="form-control" id="ticketAcoplado" maxlength="7">
+                </div>
+                <div class="col-md-4">
+                  <label for="ticketChofer" class="form-label">Chofer</label>
+                  <input type="text" class="form-control" id="ticketChofer">
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ticketCtaCte">
+                    <label class="form-check-label" for="ticketCtaCte">
+                      Cuenta Corriente
+                    </label>
+                  </div>
+                </div>
+                <div class="linea-horizontal"></div>
+              </form>
+            </div>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+              <button type="button" id="btnGuardarTicket" class="btn btn-info btn-lg px-4 me-sm-3 fw-bold">Guardar Ticket</button>
+              <button type="button" id="btnGuardarImprimir" class="btn btn-success btn-lg px-4 me-sm-3 fw-bold">Guardar e Imprimir</button>
+              <button type="button" id="btnCancelarTicket" class="btn btn-danger btn-lg px-4 fw-bold">Cancelar</button>
+            </div>
+          
+          </div>
+          <!-- Fin Seccion de nuevoTK -->
+
+          <!-- Lista de Tciekts -->
+          <div class="col-lg-6 mx-auto" id="tomaPendientes" style="display:none;">
+            <p class="texto-general mb-4 text-muted">Perfecto!!, Te muestro la lista de pendientes entonces</p>
+            <div class="col-lg-12 mb-1 mx-auto py-3 bg-info">
+              <h6 calss="text-muted py-1"><strong>*** Lista de Pendientes ***</strong></h6>
+            </div>
+            <div class="col-lg-12 mb-5 mx-auto py-1 px-3 bg-light text-start">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="fs-6">Op.</th>
+                    <th scope="col" class="fs-6">Tkt#</th>
+                    <th scope="col" class="fs-6">Chasis</th>
+                    <th scope="col" class="fs-6">Origen</th>
+                    <th scope="col" class="fs-6">Chofer</th>
+                    <th scope="col" class="fs-6">Bruto</th>
+                    <th scope="col" class="fs-6">Tara</th>
+                    <th scope="col" class="fs-6">Neto</th>
+                    <th scope="col" class="fs-6">Acc.</th>
+                  </tr>
+                </thead>
+                <tbody id="filasTabla">
+                  <!-- Llenar Tabla con JS -->
+                </tbody>
+              </table>
+            </div>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+              <button type="button" class="btn btn-success btn-lg px-4 me-sm-3 fw-bold" id="btnVolverAPeso">Volver a Peso</button>
+              <button type="button" class="btn btn-warning btn-lg px-4 me-sm-3 fw-bold" id="btnLimpLista">Limpiar Lista</button>
+              <button type="button" class="btn btn-danger btn-lg px-4 fw-bold" id="btnCancelarPendiente">Cancelar</button>
+            </div>
+          
+          </div>
+          <!-- Fin Seccion Lista de Tciekts -->
+
+          <!-- Seccion de Mensajes -->
+          <div class="col-lg-6 mx-auto" id="Mensaje" style="display:none;">
+            <p id="exclamacion"class="texto-general mb-4 text-muted">Ups!</p>
+            <div  class="d-flex flex-column align-items-center mb-3">
+            <div class="contenedor-redondo bg-light" id="icono">
+              <i class="icono-grande text-danger bi bi-x-square-fill"></i> <!--bi-file-check-fill-->
+            </div>
+            </div>
+              <p id="mensaje" class="texto-general mb-4 text-muted">Parece que algo salio mal!</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+              <button type="button" id="btnContinuar" class="btn btn-info btn-lg px-4 me-sm-3 fw-bold">Continuamos ....</button>
+            </div>
+          
+          </div>
+          <!-- Fin Seccion Mensajes -->
+        </div>
+        <script src="js/dom.js"></script>
+        <script src="js/pin.js"></script>
+        <script src="js/reloj.js"></script>
+        <script src="js/ticket.js"></script>
+        <script src="js/peso.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/pendiente.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </body>
+
+</html>

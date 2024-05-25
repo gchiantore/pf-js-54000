@@ -1,0 +1,44 @@
+[{
+  "id": 1,
+  "nombre": "Pablo Gimenez",
+  "pin": 1234,
+  "pass": 1234,
+  "user": "pablo",
+  "email": "1.png",
+  "telefono": 123456789,
+  "imagen": "1.jpeg",
+  "cdo_debo": "0123"
+  },
+  {
+  "id": 2,
+  "nombre": "Pedro Bianco",
+  "pin": 2345,
+  "pass": 2345,
+  "user": "pedro",
+  "email": "2.png",
+  "telefono": 123456789,
+  "imagen": "2.jpeg",
+  "cdo_debo": "0123"
+  },
+  {
+  "id": 3,
+  "nombre": "Juan Gomez",
+  "pin": 2222,
+  "pass": 2222,
+  "user": "juan",
+  "email": "3.png",
+  "telefono": 123456789,
+  "imagen": "3.jpeg",
+  "cdo_debo": "0123"
+  },
+  {
+    "id": 4,
+    "nombre": "Julieta Díaz",
+    "pin": 4321,
+    "pass": 4321,
+    "user": "juliet",
+    "email": "4.png",
+    "telefono": 123456789,
+    "imagen": "4.jpeg",
+    "cdo_debo": "0122"
+    }]

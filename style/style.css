@@ -1,0 +1,120 @@
+body{
+  font-family: "Exo 2", sans-serif !important;
+}
+
+.sin-controles::-webkit-inner-spin-button,
+.sin-controles::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.linea-horizontal{
+  height: 1px;
+  width: 100%;
+  background-color: gray;
+}
+
+.full-screen {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ancho completo del viewport */
+  height: 100vh; /* Alto completo del viewport */
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.cdo-debo{
+  z-index: 0;
+  border: 2px;
+  border-color: black;
+  border-style: solid;
+  padding: 20px;
+  width: 500px;
+  height: 300px;
+  border-radius: 9px;
+  background: white;
+}
+.tk-impreso{
+  z-index: 0;
+  border: 2px;
+  border-color: black;
+  border-style: solid;
+  padding: 20px;
+  width: 500px;
+  height: 700px;
+  border-radius: 9px;
+  background: white;
+  overflow-y: auto;
+}
+.pin-input {
+  width: 50px;
+  text-align: center;
+  margin: 0 5px;
+}
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.texto-general{
+  font-size:16px;
+}
+
+
+
+.icono-grande{
+  font-size: 100px;
+}
+
+.foto{
+  height: 100px;
+  width:100px;
+  background-color: aqua;
+  color: black;
+  text-align: center;
+  font-size: 100px;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.img-tabla{
+  height: 30px;
+  width:30px;
+  background-color: aqua;
+  color: black;
+  text-align: center;
+  font-size: 100px;
+  border-radius: 50%;
+}
+
+
+.contenedor-redondo{
+  height: 150px;
+  width:150px;
+  border-radius: 50%;
+}
+
+@media (min-width: 992px) {
+  .rounded-lg-3 { border-radius: .3rem; }         
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+  .lead{
+    font-size: 5px;
+  }
+  .foto{
+    height: 80px;
+    width:80px;
+  }
+}
