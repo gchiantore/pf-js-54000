@@ -9,4 +9,6 @@ Tengo que decir que la parte de lectura automatica del peso (Backend), esta resa
 
 Esta app en brebe a estar funcionando en mi negocio, solo tengo que trabajar en el backend que probablemnte use Firebase. 
 
+Para finalizar, en la carpeta data hay un archivo JSON con los datos de los usuarios, los pines validos son 1234, 2222, 2345 y 4321. 
+
 
